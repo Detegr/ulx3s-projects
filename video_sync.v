@@ -50,17 +50,19 @@ localparam v_porch_start_px = v_video_px;
 localparam v_sync_start_px = v_video_px + v_front_porch_px;
 localparam v_sync_end_px = v_sync_start_px + v_sync_px;
 
-reg[9:0] h_pixel = 10'b0;
+reg[9:0] h_pixel;
 reg[9:0] h_next_pixel;
 
 assign x = h_pixel;
 
-reg[9:0] v_pixel = 10'b0;
+reg[9:0] v_pixel;
 reg[9:0] v_next_pixel;
 
 assign y = v_pixel;
 
 wire[2:0] vga_input;
+wire in_h_blank;
+wire in_v_blank;
 
 assign in_h_blank = h_pixel > h_porch_start_px;
 assign in_v_blank = v_pixel > v_porch_start_px;

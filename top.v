@@ -6,10 +6,12 @@ module top(
     output [3:0] gpdi_dn // BGR- Clock-
 );
 
-assign rst = ~btn[0];
-
+assign rst_wire = ~btn[0];
 assign led[7:0] = 8'b0;
 
+wire rst_wire;
+wire vsync_wire;
+wire[2:0] rgb_wire;
 wire[9:0] x;
 wire[9:0] y;
 
@@ -17,8 +19,8 @@ reg [7:0] red_input;
 reg [7:0] green_input;
 reg [7:0] blue_input;
 
-reg [9:0] box_start_x = 100;
-reg [9:0] box_start_y = 100;
+reg [9:0] box_start_x;
+reg [9:0] box_start_y;
 localparam box_width = 100;
 localparam box_height = 100;
 
@@ -49,18 +51,20 @@ end
 
 digital_video gpdi(
     .clk_25mhz(clk_25mhz),
-    .rst(rst),
+    .rst(rst_wire),
     .red(red_input),
     .green(green_input),
     .blue(blue_input),
     .xout(x),
     .yout(y),
-    .rgbout(rgb)
+    .vsync_out(vsync_wire),
+    .rgbout(rgb_wire)
 );
 
-assign rgb = {gpdi_dp[2], gpdi_dp[1], gpdi_dp[0]};
+assign gpdi_dp[0] = rgb_wire[2];
+assign gpdi_dp[1] = rgb_wire[1];
+assign gpdi_dp[2] = rgb_wire[0];
 assign gpdi_dp[3] = clk_25mhz;
-assign gpdi_dn[3] = ~clk_25mhz;
 assign gpdi_dn = ~gpdi_dp;
 
 endmodule

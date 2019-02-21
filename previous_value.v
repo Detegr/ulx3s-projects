@@ -8,7 +8,7 @@ module previous_value(
 
 reg signed [3:0] input_value_1;
 reg signed [3:0] input_value_2;
-reg selection = 0;
+reg selection;
 
 assign previous_value = selection ? input_value_1 : input_value_2;
 

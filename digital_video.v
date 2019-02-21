@@ -6,15 +6,19 @@ module digital_video(
     input [7:0] blue,
     output [9:0] xout,
     output [9:0] yout,
+    output vsync_out,
     output [2:0] rgbout
 );
 
-assign xout = x;
-assign yout = y;
+wire [9:0] x_wire;
+wire [9:0] y_wire;
+
+assign xout = x_wire;
+assign yout = y_wire;
+assign vsync_out = vsync_wire;
 
 wire blanking_wire;
 wire dataclk_wire;
-wire gnd = 0;
 wire hsync_wire;
 wire locked_wire;
 wire vsync_wire;
@@ -32,18 +36,18 @@ video_sync sync(
 	.blanking(blanking_wire),
 	.h_sync(hsync_wire),
 	.v_sync(vsync_wire),
-    .x(x),
-    .y(y)
+    .x(x_wire),
+    .y(y_wire)
 );
 
 coloroutput redout(
     .clk(dataclk_wire),
     .pixelclk(clk_25mhz),
     .rst(rst),
-    .color_input(red_input),
+    .color_input(red),
     .blanking(blanking_wire),
-    .c0(gnd),
-    .c1(gnd),
+    .c0(0),
+    .c1(0),
     .dout(rgbout[0])
 );
 
@@ -53,8 +57,8 @@ coloroutput greenout(
     .rst(rst),
     .color_input(green),
     .blanking(blanking_wire),
-    .c0(gnd),
-    .c1(gnd),
+    .c0(0),
+    .c1(0),
     .dout(rgbout[1])
 );
 
