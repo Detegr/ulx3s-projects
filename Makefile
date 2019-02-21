@@ -2,7 +2,7 @@ OUTFILE := digital_video.bit
 all: bitstream
 
 clean:
-	rm -rf top.json ulx3s_out.config $(OUTFILE)
+	rm -rf top.json ulx3s_out.config $(OUTFILE) simulation/
 
 bitstream: ulx3s_out.config
 	ecppack --idcode 0x21111043 ulx3s_out.config $(OUTFILE)
@@ -16,5 +16,11 @@ top.json: top.ys top.v
 prog: ulx3s.bit
 	ujproj $(OUTFILE)
 
-.PHONY: all
-.PHONY: clean
+simulation:
+	-mkdir -p simulation
+	iverilog -o simulation/datachannel datachannel.v datachannel_test.v
+	vvp simulation/datachannel
+	iverilog -o simulation/video_sync video_sync.v video_sync_test.v
+	vvp simulation/video_sync
+
+.PHONY: all clean simulation
