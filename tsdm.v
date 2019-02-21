@@ -48,23 +48,23 @@ always @(*) begin
 			dout_reg[0] = din[0];
 			casez({popcount_din, din[0]})
 				5'b0000z,5'b0001z,5'b0010z,5'b0011z,5'b01001 : begin
-                    dout_reg[1] = dout_reg[0] ^ din[1];
-                    dout_reg[2] = dout_reg[1] ^ din[2];
-                    dout_reg[3] = dout_reg[2] ^ din[3];
-                    dout_reg[4] = dout_reg[3] ^ din[4];
-                    dout_reg[5] = dout_reg[4] ^ din[5];
-                    dout_reg[6] = dout_reg[5] ^ din[6];
-                    dout_reg[7] = dout_reg[6] ^ din[7];
+					dout_reg[1] = dout_reg[0] ^ din[1];
+					dout_reg[2] = dout_reg[1] ^ din[2];
+					dout_reg[3] = dout_reg[2] ^ din[3];
+					dout_reg[4] = dout_reg[3] ^ din[4];
+					dout_reg[5] = dout_reg[4] ^ din[5];
+					dout_reg[6] = dout_reg[5] ^ din[6];
+					dout_reg[7] = dout_reg[6] ^ din[7];
 					dout_reg[8] = 1;
 				end
 				5'b01000,5'b0101z,5'b0110z,5'b0111z,5'b1000z : begin
-                    dout_reg[1] = dout_reg[0] == din[1];
-                    dout_reg[2] = dout_reg[1] == din[2];
-                    dout_reg[3] = dout_reg[2] == din[3];
-                    dout_reg[4] = dout_reg[3] == din[4];
-                    dout_reg[5] = dout_reg[4] == din[5];
-                    dout_reg[6] = dout_reg[5] == din[6];
-                    dout_reg[7] = dout_reg[6] == din[7];
+					dout_reg[1] = dout_reg[0] == din[1];
+					dout_reg[2] = dout_reg[1] == din[2];
+					dout_reg[3] = dout_reg[2] == din[3];
+					dout_reg[4] = dout_reg[3] == din[4];
+					dout_reg[5] = dout_reg[4] == din[5];
+					dout_reg[6] = dout_reg[5] == din[6];
+					dout_reg[7] = dout_reg[6] == din[7];
 					dout_reg[8] = 0;
 				end
 				default: begin
