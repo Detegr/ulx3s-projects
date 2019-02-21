@@ -18,9 +18,9 @@ prog: ulx3s.bit
 
 simulation:
 	-mkdir -p simulation
-	iverilog -o simulation/datachannel datachannel.v datachannel_test.v
+	iverilog -o simulation/datachannel ../digital_video/datachannel.v ../digital_video/datachannel_test.v
 	vvp simulation/datachannel
-	iverilog -o simulation/video_sync video_sync.v video_sync_test.v
+	iverilog -o simulation/video_sync ../digital_video/video_sync.v ../digital_video/video_sync_test.v
 	vvp simulation/video_sync
 
 .PHONY: all clean simulation
