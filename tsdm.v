@@ -15,7 +15,6 @@ reg [3:0] popcount_din;
 reg [3:0] popcount_res;
 reg signed [3:0] symbol_bias;
 reg signed [3:0] dc_bias_out_reg;
-reg [3:0] i;
 
 reg [9:0] dout_reg;
 
@@ -31,7 +30,9 @@ endfunction
 
 always @(*) begin
 	if(rst) begin
+		dout_reg = 10'bx;
 		dc_bias_out_reg = 4'b0;
+		symbol_bias = 0;
 	end else begin
 		if(blanking) begin
 			case({c1, c0})
@@ -41,6 +42,7 @@ always @(*) begin
 				2'b11: dout_reg = 10'b1010101011;
 			endcase
 			dc_bias_out_reg = 0;
+			symbol_bias = 0;
 		end else begin
 			popcount_din = popcount(din);
 			dout_reg[0] = din[0];
