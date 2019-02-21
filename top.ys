@@ -1,2 +1,2 @@
-read_verilog clk25_250.v coloroutput.v datachannel.v previous_value.v top.v vga.v tsdm.v
+read_verilog clk25_250.v coloroutput.v datachannel.v previous_value.v top.v video_sync.v tsdm.v digital_video.v
 synth_ecp5 -json top.json

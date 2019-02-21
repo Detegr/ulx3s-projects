@@ -69,19 +69,16 @@ assign blanking = in_h_blank || in_v_blank;
 assign h_sync = between(h_pixel, h_sync_start_px, h_sync_end_px);
 assign v_sync = between(v_pixel, v_sync_start_px, v_sync_end_px);
 
-//assign vga_input = (h_pixel / (h_video_px / 8)) + (v_pixel / (v_video_px / 8));
-//assign vga_output = blanking ? 3'b000 : vga_input;
-
 reg[3:0] pixel_clk_counter;
 reg[3:0] pixel_clk_next;
 reg pixel_clk;
 
-always @(h_pixel, v_pixel) begin
-	h_next_pixel = h_pixel + 1'b1;
-	v_next_pixel = v_pixel + 1'b1;
+always @(*) begin
+	h_next_pixel <= h_pixel + 1'b1;
+	v_next_pixel <= v_pixel + 1'b1;
 end
 
-always @(pixel_clk_counter) begin
+always @(*) begin
 	pixel_clk_next = (pixel_clk_counter + 1) == 10 ? 0 : pixel_clk_counter + 1;
 end
 

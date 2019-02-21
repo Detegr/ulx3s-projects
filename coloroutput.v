@@ -1,5 +1,5 @@
 `timescale 1ns / 1ps
-module parallel_to_serial(
+module coloroutput(
     input clk,
     input pixelclk,
     input rst,

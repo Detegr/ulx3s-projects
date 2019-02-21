@@ -1,3 +1,5 @@
+// Converts 10 bit parallel data to serial data
+
 `timescale 1ns / 1ps
 module datachannel(
     input clk,
@@ -12,7 +14,7 @@ reg dout_reg;
 
 assign dout = data[i];
 
-always @(dout_reg, i) begin
+always @(*) begin
 	i_next = i + 1;
 	if(i_next == 10) begin
 		i_next = 0;
