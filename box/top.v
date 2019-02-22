@@ -9,7 +9,6 @@ module top(
 assign rst_wire = ~btn[0];
 assign led[7:0] = 8'b0;
 
-wire rst_wire;
 wire vsync_wire;
 wire[2:0] rgb_wire;
 wire[9:0] x;
@@ -39,13 +38,13 @@ end
 always @(*) begin
     if ((x > box_start_x) && (x < (box_start_x + box_width)) &&
         (y > box_start_y) && (y < (box_start_y + box_height))) begin
-        red_input <= 8'd255;
-        green_input <= 8'd127;
-        blue_input <= 8'd0;
+        red_input = 8'd255;
+        green_input = 8'd127;
+        blue_input = 8'd0;
     end else begin
-        red_input <= 8'd80;
-        green_input <= 8'd80;
-        blue_input <= 8'd80;
+        red_input = 8'd80;
+        green_input = 8'd80;
+        blue_input = 8'd80;
     end
 end
 

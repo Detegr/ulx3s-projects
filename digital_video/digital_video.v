@@ -46,8 +46,8 @@ coloroutput redout(
     .rst(rst),
     .color_input(red),
     .blanking(blanking_wire),
-    .c0(0),
-    .c1(0),
+    .c0(1'b0),
+    .c1(1'b0),
     .dout(rgbout[0])
 );
 
@@ -57,8 +57,8 @@ coloroutput greenout(
     .rst(rst),
     .color_input(green),
     .blanking(blanking_wire),
-    .c0(0),
-    .c1(0),
+    .c0(1'b0),
+    .c1(1'b0),
     .dout(rgbout[1])
 );
 

@@ -1,9 +1,7 @@
-read_verilog top.v
-read_verilog \
+read_verilog top.v \
     ../digital_video/clk25_250.v \
     ../digital_video/coloroutput.v \
     ../digital_video/datachannel.v \
-    ../digital_video/previous_value.v \
     ../digital_video/video_sync.v \
     ../digital_video/tsdm.v \
     ../digital_video/digital_video.v

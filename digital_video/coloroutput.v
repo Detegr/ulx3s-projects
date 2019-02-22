@@ -11,31 +11,24 @@ module coloroutput(
 );
 
 wire [9:0] color_output;
-wire signed [3:0] dc_bias_wire;
-wire signed [3:0] dc_bias_feedback;
-
-previous_value dc_bias_buf(
-	.clk(pixelclk),
-	.current_value(dc_bias_wire),
-	.previous_value(dc_bias_feedback)
-);
+reg signed [3:0] dc_bias;
+reg signed [3:0] dc_bias_feedback;
 
 tsdm tsdm(
-	.rst(rst),
-	.din(color_input),
-	.dout(color_output),
-	.blanking(blanking),
-	.c0(c0),
-	.c1(c1),
-	.prev_dc_bias(dc_bias_feedback),
-	.dc_bias(dc_bias_wire)
+    .clk(pixelclk),
+    .rst(rst),
+    .din(color_input),
+    .dout(color_output),
+    .blanking(blanking),
+    .c0(c0),
+    .c1(c1)
 );
 
 datachannel datachannel(
-	.clk(clk),
-	.rst(rst),
-	.data(color_output),
-	.dout(dout)
+    .clk(clk),
+    .rst(rst),
+    .data(color_output),
+    .dout(dout)
 );
 
 endmodule
