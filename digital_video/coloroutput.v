@@ -11,11 +11,8 @@ module coloroutput(
 );
 
 wire [9:0] color_output;
-reg signed [3:0] dc_bias;
-reg signed [3:0] dc_bias_feedback;
 
 tsdm tsdm(
-    .clk(pixelclk),
     .rst(rst),
     .din(color_input),
     .dout(color_output),
