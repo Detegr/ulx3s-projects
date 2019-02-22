@@ -22,5 +22,7 @@ simulation:
 	vvp simulation/datachannel
 	iverilog -o simulation/video_sync ../digital_video/video_sync.v ../digital_video/video_sync_test.v
 	vvp simulation/video_sync
+	iverilog -o simulation/test test.v top.v clk25_250_test.v ../digital_video/digital_video.v ../digital_video/video_sync.v ../digital_video/tsdm.v ../digital_video/previous_value.v ../digital_video/datachannel.v ../digital_video/coloroutput.v
+	vvp simulation/test
 
 .PHONY: all clean simulation
