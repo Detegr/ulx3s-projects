@@ -13,8 +13,8 @@ ulx3s_out.config: top.json
 top.json: top.ys top.v
 	yosys top.ys 
 
-prog: ulx3s.bit
-	ujproj $(OUTFILE)
+prog: bitstream
+	ujprog $(OUTFILE)
 
 simulation:
 	-mkdir -p simulation
