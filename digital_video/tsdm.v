@@ -10,8 +10,9 @@ module tsdm(
 	output reg [9:0] dout
 );
 
-reg signed [3:0] dc_bias;
-wire signed [3:0] symbol_bias;
+reg signed [2:0] dc_bias;
+wire [3:0] ones;
+wire [3:0] zeros;
 reg [9:0] dout_reg;
 
 function [3:0] popcount;
@@ -50,11 +51,12 @@ always @(*) begin
     endcase
 end
 
-assign symbol_bias = (popcount(dout_reg[7:0]) - 4);
+assign ones = popcount(dout_reg[7:0]);
+assign zeros = 8 - ones;
 
 always @(posedge clk) begin
 	if(rst) begin
-		dc_bias <= 4'b0;
+		dc_bias <= 4'sd0;
         dout <= 10'bx;
 	end else begin
         if(blanking) begin
@@ -64,19 +66,31 @@ always @(posedge clk) begin
 				2'b10: dout <= 10'b0101010100;
 				2'b11: dout <= 10'b1010101011;
 			endcase
-            dc_bias <= 0;
+            dc_bias <= 4'sd0;
         end else begin
-            if((dc_bias > 0 && symbol_bias > 0) ||
-                (dc_bias < 0 && symbol_bias < 0)) begin
-                dout[7:0] <= ~dout_reg[7:0];
-                dout[9] <= 1;
-                dc_bias <= ~symbol_bias;
+            if(dc_bias == 0 || (ones == zeros)) begin
+                dout[9] <= ~dout_reg[8];
+                dout[8] <= dout_reg[8];
+                dout[7:0] <= (dout_reg[8]) ? dout_reg[7:0] : ~dout_reg[7:0];
+                if(dout_reg[8] == 0) begin
+                    dc_bias <= dc_bias + (zeros - ones);
+                end else begin
+                    dc_bias <= dc_bias + (ones - zeros);
+                end
             end else begin
-                dout[7:0] <= dout_reg[7:0];
-                dout[9] <= 0;
-                dc_bias <= symbol_bias;
+                if((dc_bias > 0 && (ones > zeros)) ||
+                    (dc_bias < 0 && (zeros > ones))) begin
+                    dout[9] <= 1;
+                    dout[8] <= dout_reg[8];
+                    dout[7:0] <= ~dout_reg[7:0];
+                    dc_bias <= dc_bias + 2 * dout_reg[8] + (zeros - ones);
+                end else begin
+                    dout[9] <= 0;
+                    dout[8] <= dout_reg[8];
+                    dout[7:0] <= dout_reg[7:0];
+                    dc_bias <= dc_bias - 2 * (~dout_reg[8]) + (ones - zeros);
+                end
             end
-            dout[8] <= dout_reg[8];
         end
 	end
 end
