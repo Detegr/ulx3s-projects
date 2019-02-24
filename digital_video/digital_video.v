@@ -22,6 +22,7 @@ wire dataclk_wire;
 wire hsync_wire;
 wire locked_wire;
 wire vsync_wire;
+wire pixelclk_wire;
 
 supply0 gnd;
 
@@ -39,12 +40,13 @@ video_sync sync(
 	.h_sync(hsync_wire),
 	.v_sync(vsync_wire),
     .x(x_wire),
-    .y(y_wire)
+    .y(y_wire),
+    .pixel_clk(pixelclk_wire)
 );
 
 coloroutput redout(
     .clk(dataclk_wire),
-    .pixelclk(clk_25mhz),
+    .pixelclk(pixelclk_wire),
     .rst(rst),
     .color_input(red),
     .blanking(blanking_wire),
@@ -55,7 +57,7 @@ coloroutput redout(
 
 coloroutput greenout(
     .clk(dataclk_wire),
-    .pixelclk(clk_25mhz),
+    .pixelclk(pixelclk_wire),
     .rst(rst),
     .color_input(green),
     .blanking(blanking_wire),
@@ -66,7 +68,7 @@ coloroutput greenout(
 
 coloroutput blueout(
     .clk(dataclk_wire),
-    .pixelclk(clk_25mhz),
+    .pixelclk(pixelclk_wire),
     .rst(rst),
     .color_input(blue),
     .blanking(blanking_wire),

@@ -7,7 +7,8 @@ module video_sync(
 	output h_sync,
 	output v_sync,
     output [9:0] x,
-    output [9:0] y
+    output [9:0] y,
+    output reg pixel_clk
 );
 
 function between;
@@ -73,7 +74,6 @@ assign v_sync = between(v_pixel, v_sync_start_px, v_sync_end_px);
 
 reg[3:0] pixel_clk_counter;
 reg[3:0] pixel_clk_next;
-reg pixel_clk;
 
 always @(*) begin
 	h_next_pixel = h_pixel + 1'b1;
@@ -89,7 +89,7 @@ always @(posedge clk) begin
 		pixel_clk <= 0;
 	end else begin
 		pixel_clk_counter <= pixel_clk_next;
-		pixel_clk <= pixel_clk_counter < 5;
+		pixel_clk <= pixel_clk_next < 5;
 
         if(pixel_clk_counter == 0) begin
             if(h_next_pixel == h_total_px) begin
