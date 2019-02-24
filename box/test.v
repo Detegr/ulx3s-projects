@@ -12,7 +12,7 @@ initial begin
     # 48000000 $finish;
 end
 
-reg clk = 0;
+reg clk = 1;
 always #10 clk = !clk;
 
 wire blanking_wire;

@@ -23,6 +23,8 @@ wire hsync_wire;
 wire locked_wire;
 wire vsync_wire;
 
+supply0 gnd;
+
 // 250MHz data clock
 clk25_250 clk25_250(
     .clk_25mhz(clk_25mhz),
@@ -46,8 +48,8 @@ coloroutput redout(
     .rst(rst),
     .color_input(red),
     .blanking(blanking_wire),
-    .c0(1'b0),
-    .c1(1'b0),
+    .c0(gnd),
+    .c1(gnd),
     .dout(rgbout[0])
 );
 
@@ -57,8 +59,8 @@ coloroutput greenout(
     .rst(rst),
     .color_input(green),
     .blanking(blanking_wire),
-    .c0(1'b0),
-    .c1(1'b0),
+    .c0(gnd),
+    .c1(gnd),
     .dout(rgbout[1])
 );
 

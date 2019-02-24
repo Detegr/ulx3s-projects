@@ -6,6 +6,7 @@ module top(
     output [3:0] gpdi_dn // BGR- Clock-
 );
 
+wire rst_wire;
 assign rst_wire = ~btn[0];
 assign led[7:0] = 8'b0;
 

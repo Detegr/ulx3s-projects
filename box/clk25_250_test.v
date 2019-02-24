@@ -3,7 +3,7 @@ module clk25_250(
     output locked,
     output clko
 );
-reg clk = 0;
+reg clk = 1;
 always #1 clk = !clk;
 assign locked = 0;
 assign clko = clk;

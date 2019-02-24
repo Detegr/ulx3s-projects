@@ -13,6 +13,7 @@ module coloroutput(
 wire [9:0] color_output;
 
 tsdm tsdm(
+    .clk(pixelclk),
     .rst(rst),
     .din(color_input),
     .dout(color_output),
