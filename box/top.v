@@ -21,27 +21,65 @@ reg [7:0] blue_input;
 
 reg [9:0] box_start_x;
 reg [9:0] box_start_y;
+wire [9:0] box_next_x;
+wire [9:0] box_next_y;
+wire [9:0] box_prev_x;
+wire [9:0] box_prev_y;
+
+assign box_next_x = box_start_x + 1;
+assign box_prev_x = box_start_x - 1;
+assign box_next_y = box_start_y + 1;
+assign box_prev_y = box_start_y - 1;
+
 localparam box_width = 100;
 localparam box_height = 100;
 
+reg[7:0] loop;
+reg[7:0] loop2;
+reg[7:0] loop3;
+wire[7:0] next_loop;
+wire[7:0] next_loop2;
+wire[7:0] next_loop3;
+assign next_loop = loop + 1;
+assign next_loop2 = loop2 + 2;
+assign next_loop3 = loop3 + 1;
+
+reg left, right, up, down;
+
 always @(posedge vsync_wire) begin
-    if (btn[6]) begin
-        box_start_x <= box_start_x + 1;
-    end else if (btn[5]) begin
-        box_start_x <= box_start_x - 1;
-    end else if (btn[3]) begin
-        box_start_y <= box_start_y - 1;
-    end else if (btn[4]) begin
-        box_start_y <= box_start_y + 1;
+    left <= btn[5];
+    right <= btn[6];
+    up <= btn[3];
+    down <= btn[4];
+
+    if(rst_wire) begin
+        box_start_x <= 40;
+        box_start_y <= 40;
+        loop <= 8'd0;
+        loop2 <= 8'd80;
+        loop3 <= 8'd160;
+    end else begin
+        loop <= next_loop;
+        loop2 <= next_loop2;
+        loop3 <= next_loop3;
+
+        if(right)
+            box_start_x <= box_next_x;
+        else if(left)
+            box_start_x <= box_prev_x;
+        else if(up)
+            box_start_y <= box_prev_y;
+        else if(down)
+            box_start_y <= box_next_y;
     end
 end
 
 always @(*) begin
     if ((x > box_start_x) && (x < (box_start_x + box_width)) &&
         (y > box_start_y) && (y < (box_start_y + box_height))) begin
-        red_input = 8'd255;
-        green_input = 8'd127;
-        blue_input = 8'd0;
+        red_input = loop;
+        green_input = loop2;
+        blue_input = loop3;
     end else begin
         red_input = 8'd80;
         green_input = 8'd80;
